@@ -1,0 +1,200 @@
+map = [0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,
+       0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,
+       0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+       1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+       0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+       0,0,1,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,
+       0,0,1,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,
+       0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,
+       0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,1,
+       0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,1,1,
+       0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,1,
+       0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,0,
+       0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,
+       0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,
+       0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+       0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,
+       0,0,0,0,0,0,0,0,1,1,0,0,0,1,1,1,1,0,
+       0,0,0,0,0,0,0,0,1,1,1,0,0,1,1,1,1,0,
+       0,0,0,0,0,0,0,1,1,1,0,0,0,1,1,1,1,0,
+       0,0,0,0,0,0,0,0,1,1,0,0,0,1,1,1,1,1]
+
+
+                    prevXCoord = initialXCoord
+                    prevYCoord = initialYCoord
+                    prevXBox = initialXBox
+                    prevYBox = initialYBox
+
+
+        global orientation, xPos, yPos
+                    if(nextXbox !=  prevXBox):
+                        rospy.logerr("X " + str(nextXbox) + " " + str(prevXBox))
+                        if(nextXbox == prevXBox+1):
+                            calcAngle = 0.0 #0
+                        else:
+                            calcAngle = 57.2957795131#180
+                    else:
+                        rospy.logerr("Y " + str(nextYbox) + " " + str(prevYBox))
+                        if (nextYbox == prevYBox - 1):
+                            calcAngle = 40.5142342271#90
+                        else:
+                            calcAngle = -40.5142342271#270
+                    vel = geometry_msgs.msg.Twist()
+                    rospy.logerr(calcAngle)
+                    while(abs(math.degrees(orientation) - calcAngle) >1 ):
+                        vel.angular.z = 2
+                        vel.linear.x = 0
+                        pub.publish(vel)
+                    while not (int(math.floor(9 + xPos)) == nextXbox and int(math.floor(10 - yPos))==nextYbox):
+                        vel.angular.z = 0
+                        vel.linear.x = 1
+                        pub.publish(vel)
+                    vel.linear.x = 0
+                    vel.angular.z = 0
+                    pub.publish(vel)
+
+
+                        rospy.logerr(pathI)
+                        #rospy.logerr("X "+ str(nextXbox) + " Y " + str(nextYbox))
+                        global orientation, xPos, yPos
+                        if (nextXbox != prevXBox):
+                            if (nextXbox == prevXBox + 1):
+                                calcAngle = 0.0  # 0
+                            else:
+                                calcAngle = 57.2957795131  # 180
+                        else:
+                            if (nextYbox == prevYBox - 1):
+                                calcAngle = 40.5142342271  # 90
+                            else:
+                                calcAngle = -40.5142342271  # 270
+                        vel = geometry_msgs.msg.Twist()
+
+
+
+                    if (nextXbox != prevXBox):
+                        if (nextXbox == prevXBox + 1):
+                            calcAngle = math.radians(0)
+                        else:
+                            calcAngle = math.radians(180)
+                    else:
+                        if (nextYbox == prevYBox - 1):
+                            calcAngle = math.radians(90)
+                        else:
+                            calcAngle = math.radians(270)
+
+                        #while (abs(math.degrees(orientation) - 40.5142342271) > 1):
+                        #vel.angular.z = math.radians(40.5142342271)/10
+                        #vel.linear.x = 0
+                        #pub.publish(vel)
+                        #rate.sleep();
+                        #rospy.logerr("after sleep: " + str(math.degrees(orientation)))
+                        #rospy.spinOnce()
+                        '''rospy.logerr("calc: " + str((calcAngle)))
+                        rospy.logerr("initial: " + str(math.degrees(orientation)))
+
+                        vel.angular.z = math.radians(-40.5142342271)/10
+                        vel.linear.x = 0
+                        pub.publish(vel)
+                        while (abs(math.degrees(orientation) - calcAngle) > 1):
+                           vel.angular.z = 1
+                            vel.linear.x = 0
+                            pub.publish(vel)
+
+                        rospy.logerr("after: " + str(math.degrees(orientation)))
+                        #while not (int(math.floor(9 + xPos)) == nextXbox and int(math.floor(10 - yPos)) == nextYbox):
+                            #vel.angular.z = 0
+                            #vel.linear.x = 1
+                            #pub.publish(vel)
+                        #vel.linear.x = 0
+                        #vel.angular.z = 0
+                        #pub.publish(vel)
+                        prevXBox = nextXbox
+                        prevYBox = nextYbox'''
+
+                    #rospy.logerr("End")
+                    #for pathStep in path:
+                         #test[pathStep[1]][pathStep[0]] = 9
+                    #for testi in range(20):
+                        #rospy.logerr(test[testi])
+                break;
+
+
+
+                  '''#rospy.logerr("X "+ str(nextXbox) + " Y " + str(nextYbox))
+                        global orientation, xPos, yPos
+                        if (nextXbox != prevXBox):
+                            if (nextXbox == prevXBox + 1):
+                                calcAngle = 0.0  # 0
+                            else:
+                                calcAngle = 57.2957795131  # 180
+                        else:
+                            if (nextYbox == prevYBox - 1):
+                                calcAngle = 40.5142342271  # 90
+                            else:
+                                calcAngle = -40.5142342271  # 270
+                        vel = geometry_msgs.msg.Twist()
+
+                        #while (abs(math.degrees(orientation) - 40.5142342271) > 1):
+                        #vel.angular.z = math.radians(40.5142342271)/10
+                        #vel.linear.x = 0
+                        #pub.publish(vel)
+                        #rate.sleep();
+                        #rospy.logerr("after sleep: " + str(math.degrees(orientation)))
+                        #rospy.spinOnce()
+                        rospy.logerr("calc: " + str((calcAngle)))
+                        rospy.logerr("initial: " + str(math.degrees(orientation)))
+
+                        vel.angular.z = math.radians(-40.5142342271)/10
+                        vel.linear.x = 0
+                        pub.publish(vel)
+                        while (abs(math.degrees(orientation) - calcAngle) > 1):
+                           vel.angular.z = 1
+                            vel.linear.x = 0
+                            pub.publish(vel)
+
+                        rospy.logerr("after: " + str(math.degrees(orientation)))
+                        #while not (int(math.floor(9 + xPos)) == nextXbox and int(math.floor(10 - yPos)) == nextYbox):
+                            #vel.angular.z = 0
+                            #vel.linear.x = 1
+                            #pub.publish(vel)
+                        #vel.linear.x = 0
+                        #vel.angular.z = 0
+                        #pub.publish(vel)
+                        prevXBox = nextXbox
+                        prevYBox = nextYbox'''
+
+
+
+                        ''' global orientation, xPos, yPos
+                    if nextXbox != prevXBox:
+                        rospy.logerr("X " + str(nextXbox) + " " + str(prevXBox))
+                        if (nextXbox == prevXBox + 1):
+                            calcAngle = 0.0  # 0
+                        else:
+                            calcAngle = 57.2957795131  # 180
+                    else:
+                        rospy.logerr("Y " + str(nextYbox) + " " + str(prevYBox))
+                        if (nextYbox == prevYBox - 1):
+                            calcAngle = 40.5142342271  # 90
+                        else:
+                            calcAngle = -40.5142342271  # 270
+                    vel = geometry_msgs.msg.Twist()
+                    while abs(math.degrees(orientation) - calcAngle) > 1:
+                        vel.angular.z = 2
+                        vel.linear.x = 0
+                        pub.publish(vel)
+                        duration = rospy.Rate(1) # 10hz
+                        duration.sleep()
+
+                    while not int(math.floor(9 + xPos)) == nextXbox and int(math.floor(10 - yPos)) == nextYbox:
+                        vel.angular.z = 0
+                        vel.linear.x = 1
+                        pub.publish(vel)
+                        duration = rospy.Rate(1) # 10hz
+                        duration.sleep()
+
+                    vel.linear.x = 0
+                    vel.angular.z = 0
+                    pub.publish(vel)
+                    prevXBox = nextXbox
+                    prevYBox = nextYbox'''
